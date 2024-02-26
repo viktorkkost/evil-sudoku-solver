@@ -130,6 +130,25 @@ unsigned char solveSquare(unsigned char depth)
     return RES_BADNUM;
 }
 
+void print()
+{
+    for(int i = 0; i < 9; ++i)
+    {
+        for(int j = 0; j < 9; ++j)
+        {
+            if(!(j%3))
+                cout << ' ';
+            if(sudoku[i][j] == 0)
+                cout << '*';
+            else
+                cout << (unsigned short) sudoku[i][j];
+        }
+        if(!((i+1)%3))
+            cout << '\n';
+        cout << '\n';
+    }
+}
+
 int main() {
     //init global vars
     init();
@@ -143,6 +162,7 @@ int main() {
         return 1;
 
     //read 81 characters
+    cout << "Enter puzzle. Left to right and up to down, 0s for empty squares:\n";
     cin.get(inp, 82);
 
     //iterate over input
@@ -157,7 +177,9 @@ int main() {
                || !(squares[(i/27)*3 + (i%9)/3] & 1 << inp[i] - '1'))
             {
                 //if used, end program
-                cout << "invalid puzzle";
+                cout << "\nYou entered the following puzzle:\n";
+                print();
+                cout << "\ninvalid puzzle";
                 delete[] inp;
                 return 1;
             }
@@ -171,6 +193,8 @@ int main() {
     }
 
     delete[] inp;
+    cout << "\nYou entered the following puzzle:\n";
+    print();
 
     //start with -1 depth because it gets incremented on entering. monkey code
     unsigned char res = solveSquare(-1);
@@ -182,19 +206,8 @@ int main() {
     }
 
     //print the result
-    cout << "\n\n";
-    for(int i = 0; i < 9; ++i)
-    {
-        for(int j = 0; j < 9; ++j)
-        {
-            if(!(j%3))
-                cout << ' ';
-            cout << (unsigned short) sudoku[i][j];
-        }
-        if(!((i+1)%3))
-            cout << '\n';
-        cout << '\n';
-    }
+    cout << "\nSolution:\n";
+    print();
 
 //    cout << "res: " << (unsigned short) res << "\n\n";
 //    cout << "\n\n";
