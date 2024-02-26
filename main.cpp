@@ -171,6 +171,8 @@ int main() {
         //assume only digits were passed. insert non-zeroes
         if(inp[i] - '0')
         {
+            sudoku[i/9][i%9] = (unsigned char) (inp[i] - '0');
+            
             //digit hasn't been used in this row, col and square?
             if(!(rows[i/9] & 1 << inp[i] - '1')
                || !(cols[i%9] & 1 << inp[i] - '1')
@@ -185,7 +187,6 @@ int main() {
             }
 
             //digit is free. mark it as such
-            sudoku[i/9][i%9] = (unsigned char) (inp[i] - '0');
             rows[i/9] &= ~(1 << inp[i] - '1');
             cols[i%9] &= ~(1 << inp[i] - '1');
             squares[(i/27)*3 + (i%9)/3] &= ~(1 << inp[i] - '1');
